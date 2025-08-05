@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}خانه{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm text-center mb-4">
+    <h1 class="mb-3">🎓  به پورتال آموزشی خوش آمدید</h1>
+    <p>لطفاً از منوی بالا برای ورود، ثبت‌نام یا دسترسی به پنل کاربری استفاده کنید.</p>
+</div>
+
+<h4 class="mb-3 text-center">دوره‌های زبان آلمانی</h4>
+<div class="row g-4">
+    {% for level in levels %}
+    <div class="col-md-6">
+        <div class="card text-center shadow-sm p-3 h-100">
+            <h3 class="text-primary fw-bold">{{ level }}</h3>
+            <p>دوره زبان آلمانی {{ level }}</p>
+            <a href="{{ url_for('course_detail', level=level) }}" class="btn btn-outline-primary">مشاهده</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br>
+<h4 class="mb-3 text-center">دوره‌های آمادگی آزمون زبان آلمانی</h4>
+<div class="row g-4">
+    {% for level in elevels %}
+    <div class="col-md-6">
+        <div class="card text-center shadow-sm p-3 h-100 exam-card">
+            <h3 class="fw-bold">{{ level }}</h3>
+            <p>دوره آمادگی آزمون زبان آلمانی {{ level }}</p>
+            <a href="{{ url_for('course_detail', level=level) }}" class="btn btn-outline-primary">مشاهده</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

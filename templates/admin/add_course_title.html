@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}افزودن موضوع جدید{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px;">
+    <h1 class="text-center my-4">➕ افزودن موضوع جدید</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% elif success %}
+        <div class="alert alert-success">موضوع با موفقیت افزوده شد.</div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="level" class="form-label">کلید (مثل A1):</label>
+            <input type="text" class="form-control" id="level" name="level" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">عنوان موضوع:</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">ثبت موضوع</button>
+    </form>
+</div>
+{% endblock %}

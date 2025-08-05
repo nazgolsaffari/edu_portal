@@ -1,0 +1,26 @@
+{
+  "ST2": {
+    "courses": {
+      "A1": {
+        "teacher": "T1",
+        "passed": "in_progress"
+      }
+    }
+  },
+  "ST1": {
+    "courses": {
+      "A1": {
+        "teacher": "T1",
+        "passed": true
+      },
+      "A2": {
+        "teacher": "T1",
+        "passed": true
+      },
+      "B1": {
+        "teacher": "T2",
+        "passed": "in_progress"
+      }
+    }
+  }
+}

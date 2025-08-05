@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}دوره {{ level }}{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card p-4 shadow-sm text-center" style="max-width: 600px; width: 100%;">
+        <h1 class="text-success display-5 mb-4">{{ course.title }}</h1>
+        
+        <ul class="list-group text-center mb-4">
+            <!-- <li class="list-group-item"><strong>تاریخ شروع میلادی:</strong> {{ course.start_date }}</li> -->
+            <li class="list-group-item"><strong>تاریخ شروع:</strong> {{ course.start_date_jalali }}</li>
+            <li class="list-group-item"><strong>مدت دوره:</strong> {{ course.duration_weeks }} هفته</li>
+            <li class="list-group-item"><strong>زمان برگزاری:</strong> {{ course.schedule }}</li>
+            <li class="list-group-item"><strong>نام استاد:</strong> {{ teacher_full_name }}</li>
+            <li class="list-group-item">
+            <strong>پیش‌نیاز:</strong>
+            {% if course.prerequisites %}
+                {% if course.prerequisites is string %}
+                {{ course.prerequisites }}
+                {% else %}
+                {% for p in course.prerequisites %}
+                    {{ p }}{% if not loop.last %} و {% endif %}
+                {% endfor %}
+                {% endif %}
+            {% else %}
+                ندارد
+            {% endif %}
+            </li>
+            <li class="list-group-item"><strong>ظرفیت:</strong> {{ course.capacity }} نفر</li>
+        </ul>
+
+        {% if session.get('role') == 'student' %}
+            {% if enrolled %}
+                {% if course_status == true %}
+                    <div class="alert alert-success">شما این دوره را با موفقیت گذرانده‌اید.</div>
+                {% elif course_status == "in_progress" %}
+                    <div class="alert alert-warning">شما درحال گذراندن این دوره هستید.</div>
+                {% elif course_status == false %}
+                    <div class="alert alert-danger">شما در این دوره رد شده‌اید.</div>
+                
+                    {% if teachers %}
+                        <form method="POST" action="{{ url_for('start_course', level=level) }}">
+                            
+                            <button type="submit" class="btn btn-success btn-lg">ثبت‌نام مجدد</button>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-warning mt-3">در حال حاضر استادی برای این دوره تعیین نشده است.</div>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                {% if prereq_passed %}
+                    {% if teachers %}
+                        <form method="POST" action="{{ url_for('start_course', level=level) }}">
+                            
+                            <button type="submit" class="btn btn-success btn-lg">ثبت‌نام در دوره</button>
+                        </form>
+                    
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-danger mt-3">
+                        ابتدا باید دوره(های)  
+                        {% for p in course.prerequisites %}
+                            <strong>{{ p }}</strong>{% if not loop.last %} و {% endif %}
+                        {% endfor %}
+                        را با موفقیت بگذرانید.
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        {% if session.get('role') == 'admin' %}
+        <div class="mt-5 border-top pt-4">
+            <h4 class="text-danger">مدیریت دوره</h4>
+            <br>
+            <a href="{{ url_for('edit_course', level=level) }}" class="btn btn-warning me-2">
+            ✏️ ویرایش دوره
+            </a>
+
+            <form method="POST" action="{{ url_for('delete_course') }}" style="display:inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این دوره حذف شود؟');">
+            <input type="hidden" name="level" value="{{ level }}">
+            <button type="submit" class="btn btn-danger">
+                🗑️ حذف دوره
+            </button>
+            </form>
+        </div>
+        {% endif %}
+        {% if not session.get('role') %}
+        <div class="mt-4">
+            <div class="alert alert-info">
+                برای ثبت‌نام در دوره ابتدا باید وارد شوید.
+            </div>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">ورود به پورتال</a>
+        </div>
+        {% endif %}
+
+
+    </div>
+</div>
+{% endblock %}

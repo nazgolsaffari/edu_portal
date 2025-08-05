@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}محتوای دوره {{ level }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-4 text-center">📚 محتوای دوره {{ level }}</h3>
+
+    {% if content %}
+        {% for item in content %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.body }}</p>
+
+                {% if item.file_url %}
+                    {% if item.file_url.endswith('.mp4') %}
+                        <video controls class="w-100" style="max-height: 400px;">
+                            <source src="{{ item.file_url }}" type="video/mp4">
+                            مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                        </video>
+                    {% else %}
+                        <a href="{{ item.file_url }}" target="_blank" class="btn btn-outline-primary mt-3">
+                            📎 مشاهده فایل ضمیمه
+                        </a>
+                        
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+       
+
+    {% else %}
+        <div class="alert alert-info text-center">هیچ محتوایی برای این دوره اضافه نشده است.</div>
+    {% endif %}
+
+    <a href="{{ url_for('profile') }}" class="btn btn-sm btn-outline-primary ms-2">⬅ بازگشت به پروفایل</a>
+</div>
+{% endblock %}

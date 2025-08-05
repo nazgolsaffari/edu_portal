@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}افزودن استاد جدید{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm mx-auto" style="max-width: 600px;">
+    <h3 class="mb-4 text-center">➕ افزودن استاد جدید</h3>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="username" class="form-label">نام کاربری استاد</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="full_name" class="form-label">نام استاد</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">رمز عبور</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">دروس قابل ارائه توسط استاد</label>
+            <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+                {% for key, course in courses.items() %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="courses" value="{{ key }}" id="course_{{ key }}">
+                        <label class="form-check-label" for="course_{{ key }}">
+                            {{ key }} - {{ course.title }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success">ذخیره استاد</button>
+            <a href="{{ url_for('profile') }}" class="btn btn-secondary">بازگشت</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

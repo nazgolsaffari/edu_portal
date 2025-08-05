@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}گزارش دانش‌آموزان{% endblock %}
+
+{% block content %}
+<h2 class="text-center my-4">📊 گزارش وضعیت دانش‌آموزان در دروس</h2>
+
+<form method="get" class="mb-4 text-center">
+    <label for="teacher" class="form-label">فیلتر بر اساس نام استاد:</label>
+    <select name="teacher" id="teacher" class="form-select d-inline-block w-auto mx-2">
+        <option value="">-- همه‌ی استادها --</option>
+        {% for t_username, t_name in teachers.items() %}
+            <option value="{{ t_username }}" {% if t_username == selected_teacher %}selected{% endif %}>
+                {{ t_name }}
+            </option>
+        {% endfor %}
+
+    </select>
+    <button type="submit" class="btn btn-outline-primary">اعمال فیلتر</button>
+</form>
+
+
+{% if report %}
+    {% for level, records in report.items() %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-info text-white">
+                درس {{ level }}
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th class="w-25">نام زبان‌آموز</th>
+                            <th class="w-25">نام استاد</th>
+                            <th class="w-25">وضعیت</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for entry in records %}
+                            <tr>
+                                <td class="w-25">{{ entry.full_name }}</td>
+                                <td class="w-25">{{ entry.t_full_name }}</td>
+                                <td>
+                                    {% if entry.passed == true %}
+                                        <span class="text-success">✅ گذرانده</span>
+                                    {% elif entry.passed == 'in_progress' %}
+                                        <span class="text-warning">⏳ در حال گذراندن</span>
+                                    {% elif entry.passed == false %}
+                                        <span class="text-danger">❌ مردود</span>
+                                    {% else %}
+                                        <span class="text-muted">نامشخص</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="text-center text-muted">هیچ گزارشی برای نمایش وجود ندارد.</p>
+{% endif %}
+{% endblock %}

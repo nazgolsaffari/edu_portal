@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}پرداخت دوره{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 500px;">
+        <h2 class="text-center text-primary mb-4">💳 پرداخت دوره</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">شماره کارت:</label>
+                <input type="text" class="form-control" name="card_number" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">رمز دوم اینترنتی (CVV2):</label>
+                <input type="password" class="form-control" name="cvv2" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ایمیل (Gmail):</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">نهایی کردن خرید</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

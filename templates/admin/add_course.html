@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}افزودن درس جدید{% endblock %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4 shadow-sm">
+            <h3 class="mb-4 text-center text-success">فرم افزودن درس جدید</h3>
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            {% if success %}
+                <div class="alert alert-success">درس با موفقیت اضافه شد!</div>
+            {% endif %}
+            <form method="POST">
+                
+                <!-- انتخاب سطح دوره -->
+                <div class="mb-3">
+                    <label for="level" class="form-label">سطح دوره (مثلاً A1):</label>
+                    <select name="level" id="level" class="form-select" required onchange="updateTeachers()">
+                        <option disabled selected>انتخاب کنید</option>
+                        {% for level in levels %}
+                            <option value="{{ level }}">{{ level }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- انتخاب استاد -->
+                <div class="mb-3">
+                    <label for="teacher_names" class="form-label">نام استاد:</label>
+                    <select name="teacher" id="teacher" class="form-select" required>
+                        <option disabled selected>لطفاً ابتدا سطح را انتخاب کنید</option>
+                    </select>
+
+
+                </div>
+
+
+                <div class="mb-3">
+                    <label>عنوان</label>
+                    <input name="title" type="text" class="form-control" required>
+                </div>
+                <div class="mb-3 position-relative">
+                <label for="jalali-datepicker">تاریخ شروع</label>
+                    <div class="input-group">
+                        <input name="start_date_jalali" id="jalali-datepicker" class="form-control" autocomplete="off">
+                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                    </div>
+                    <input type="hidden" name="start_date" id="gregorian-date">
+                </div>
+
+                <div class="mb-3">
+                    <label>مدت دوره (هفته)</label>
+                    <input name="duration" type="number" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>زمان برگزاری</label>
+                    <input name="schedule" type="text" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>پیش‌نیاز</label>
+                    <input name="prerequisites" type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>ظرفیت کلاس</label>
+                    <input name="capacity" type="number" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn btn-success w-100">ذخیره درس</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- کتابخانه‌های مورد نیاز -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-date/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<script>
+$(document).ready(function () {
+    $("#jalali-datepicker").persianDatepicker({
+        format: 'YYYY/MM/DD',
+        altField: '#gregorian-date',
+        altFormat: 'YYYY/MM/DD',
+        observer: true,
+        initialValue: false,
+        autoClose: true,
+        calendar: {
+            persian: {
+                locale: 'fa'
+            }
+        }
+    });
+});
+
+
+const teacherCourses = JSON.parse('{{ teacher_courses | tojson | safe }}');
+const teacherNames = JSON.parse('{{ teachers | tojson | safe }}');
+
+
+function updateTeachers() {
+    const levelSelect = document.getElementById('level');
+    const teacherSelect = document.getElementById('teacher');
+    const selectedLevel = levelSelect.value;
+
+    
+    teacherSelect.innerHTML = '';
+
+    let found = false;
+    for (const [username, courses] of Object.entries(teacherCourses)) {
+        if (courses.includes(selectedLevel)) {
+            const option = document.createElement('option');
+            option.value = username;  
+            option.textContent = teacherNames[username] || username;  
+            teacherSelect.appendChild(option);
+            found = true;
+        }
+    }
+
+    if (!found) {
+        const option = document.createElement('option');
+        option.textContent = 'هیچ استادی برای این سطح وجود ندارد';
+        option.disabled = true;
+        teacherSelect.appendChild(option);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const levelSelect = document.getElementById('level');
+    levelSelect.addEventListener('change', updateTeachers);
+    updateTeachers(); 
+});
+</script>
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-center mb-4">دانش‌آموزان درس {{ course }}</h2>
+
+<table class="table table-bordered text-center">
+  <thead class="table-light">
+    <tr>
+      <th>نام کاربری</th>
+      <th>وضعیت فعلی</th>
+      <th>اقدامات</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in students %}
+      <tr>
+        <td>{{ s.full_name }}</td>
+        <td>
+            {% if s.passed == true %}
+                <span class="text-success">✅ گذرانده</span>
+            {% elif s.passed == 'in_progress' %}
+                <span class="text-warning">⏳ در حال گذراندن</span>
+            {% else %}
+                <span class="text-danger">❌ مردود</span>
+            {% endif %}
+        </td>
+        <td>
+            <form method="post" action="{{ url_for('update_student_status', course=course, student=s.username) }}" class="status-form">
+                <select name="status" class="form-select form-select-sm d-inline-block w-auto status-select">
+                    <option value="in_progress" {% if s.passed == 'in_progress' %}selected{% endif %}>در حال گذراندن</option>
+                    <option value="true" {% if s.passed == true %}selected{% endif %}>قبول</option>
+                    <option value="false" {% if s.passed == false %}selected{% endif %}>مردود</option>
+                </select>
+
+                <button type="submit" class="btn btn-sm btn-outline-success submit-button" style="display: none;">
+                    اعمال
+                </button>
+            </form>
+
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ url_for('profile') }}" class="btn btn-secondary mt-3">🔙 بازگشت</a>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.status-form').forEach(function (form) {
+        const select = form.querySelector('.status-select');
+        const button = form.querySelector('.submit-button');
+
+        function toggleButton() {
+            if (select.value === 'true' || select.value === 'false') {
+                button.style.display = 'inline-block';
+            } else {
+                button.style.display = 'none';
+            }
+        }
+
+        
+        toggleButton();
+
+        
+        select.addEventListener('change', toggleButton);
+    });
+});
+</script>
+{% endblock %}
+

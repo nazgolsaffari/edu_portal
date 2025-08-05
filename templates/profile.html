@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}حساب کاربری{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+    
+    <h2 class="mb-3">سلام {{ full_name }} 👋</h2>
+    <p class="lead">به حساب کاربری خوش آمدید.</p>
+
+    <ul class="list-group mt-2">
+        {% if session.get('role') == 'student' %}
+            <div class="mt-4">
+                <h2>دوره‌های شما:</h2>
+
+                {% if full_courses %}
+                    <ul class="list-group text-center mb-4">
+                        <div class="row">
+                            {% for level, info in full_courses.items() %}
+                                <div class="col-12 mb-3">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ level }}</h5>
+                                            <p class="card-text">
+                                                👨‍🏫 مدرس: {{ info.teacher }}<br>
+                                                🕒 زمان برگزاری: {{ info.schedule or "نامشخص" }}<br>
+                                                📝 وضعیت: 
+                                                {% if info.passed == true %}
+                                                    <span class="text-success">✅ گذرانده</span>
+                                                {% elif info.passed == 'in_progress' %}
+                                                    <span class="text-warning">⏳ در حال گذراندن</span>
+                                                    <a href="{{ url_for('course_content', level=level) }}" class="btn btn-sm btn-outline-primary ms-2">
+                                                        مشاهده محتوا
+                                                    </a>
+                                                {% else %}
+                                                    <span class="text-danger">❌ مردود</span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </ul>
+                {% else %}
+                    <p class="text-muted">فعلاً هیچ دوره‌ای انتخاب نشده است.</p>
+                {% endif %}
+
+
+            </div>
+        {% endif %}
+
+    
+
+        {% if session.get('role') == 'admin' %}
+            <div class="d-flex justify-content-center">
+                <div style="max-width: 600px; width: 100%;">
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('add_course_title') }}" class="btn btn-outline-secondary mb-3">➕ افزودن موضوع فقط با عنوان</a>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('add_course') }}" class="btn btn-success mb-3">➕ افزودن درس جدید</a>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('add_teacher') }}" class="btn btn-primary mb-3">➕ افزودن استاد جدید</a>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('student_report') }}" class="btn btn-warning mb-3">📊 گزارش دانش‌آموزان</a>
+                    </div>
+
+                    
+                </div>
+            </div>
+
+
+        {% endif %}
+
+        {% if role == 'teacher' %}
+            <br>
+            <h2 class="text-center">لیست دروس ارائه‌شده</h2>
+
+            <div class="container mt-4">
+            {% for course in teacher_courses %}
+                <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">درس: {{ course.title }}</h5>
+                    <br>
+                    <p class="card-text">برنامه هفتگی: {{ course.schedule or '---' }}</p>
+                    <p class="card-text">تاریخ شروع: {{ course.start_date_jalali }}</p>
+                    <!-- <p class="card-text">شروع: {{ course.start_date }}</p> -->
+                    <p class="card-text">مدت: {{ course.duration_weeks }} هفته</p>
+
+                    <a href="{{ url_for('view_course_students', course=course.code) }}" class="btn btn-primary">👥 لیست دانش‌آموزان</a>
+                    <a href="{{ url_for('edit_course_content', course_code=course.code) }}" class="btn btn-outline-secondary">✏️ ویرایش محتوا</a>
+
+                    
+                </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+
+
+    </ul>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function confirmDelete() {
+    const selectedCourse = document.getElementById("levelToDelete").value;
+    return confirm(`آیا مطمئن هستید که می‌خواهید دوره‌ی «${selectedCourse}» را حذف کنید؟ این عمل قابل بازگشت نیست.`);
+}
+</script>
+{% endblock %}
+

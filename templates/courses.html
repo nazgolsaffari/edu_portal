@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}دوره‌های زبان آلمانی{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center">📘 دوره‌های زبان آلمانی</h2>
+
+<div class="container">
+    <div class="row g-4">
+
+        {% for level in levels %}
+        <div class="col-md-6">
+            <div class="card text-center shadow-sm p-4 h-100">
+                <h1 class="text-primary fw-bold display-4">{{ level }}</h1>
+                <p class="mt-3">دوره زبان آلمانی {{ level }}</p>
+                <a href="{{ url_for('course_detail', level=level) }}" class="btn btn-outline-primary mt-2">مشاهده</a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
+

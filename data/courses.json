@@ -1,0 +1,140 @@
+{
+  "A1": {
+    "title": "آشنایی با حروف و جملات ابتدایی",
+    "start_date": "۱۴۰۴/۰۵/۱۰",
+    "duration_weeks": 4,
+    "schedule": "شنبه و دوشنبه، 18:00 تا 20:00",
+    "prerequisites": [],
+    "capacity": 20,
+    "teacher": "T1",
+    "content": [
+      "جلسه ی اول"
+    ]
+  },
+  "A2": {
+    "title": "مکالمات روزمره و مهارت‌های پایه",
+    "start_date": "۱۴۰۴/۰۵/۱۰",
+    "duration_weeks": 5,
+    "schedule": "شنبه و دوشنبه، 18:00 تا 20:00",
+    "prerequisites": [
+      "A1"
+    ],
+    "capacity": 18,
+    "teacher": "T1"
+  },
+  "B1": {
+    "title": "ارتباطات پیشرفته و قواعد پایه",
+    "start_date": "2025-08-10",
+    "duration_weeks": 6,
+    "schedule": "یکشنبه و سه‌شنبه، 17:00 تا 19:00",
+    "prerequisites": [
+      "A2"
+    ],
+    "capacity": 25,
+    "teacher": "T2"
+  },
+  "B2": {
+    "title": "درک مطلب و نوشتار",
+    "start_date": "2025-08-15",
+    "duration_weeks": 6,
+    "schedule": "یکشنبه و سه‌شنبه، 17:00 تا 19:00",
+    "prerequisites": [
+      "B1"
+    ],
+    "capacity": 20,
+    "teacher": "T2"
+  },
+  "C1": {
+    "title": "مهارت‌های پیشرفته زبان",
+    "start_date": "2025-09-01",
+    "duration_weeks": 8,
+    "schedule": "دوشنبه و چهارشنبه، 19:00 تا 21:00",
+    "prerequisites": [
+      "B2"
+    ],
+    "capacity": 15,
+    "teacher": "T3"
+  },
+  "C2": {
+    "title": "تسلط کامل و آمادگی آزمون‌ها",
+    "start_date": "2025-09-01",
+    "duration_weeks": 8,
+    "schedule": "دوشنبه و چهارشنبه، 19:00 تا 21:00",
+    "prerequisites": [
+      "C1"
+    ],
+    "capacity": 15,
+    "teacher": "T3"
+  },
+  "EA1": {
+    "title": "آزمون آمادگی گوته A1",
+    "start_date": "2025-08-05",
+    "duration_weeks": 2,
+    "schedule": "شنبه‌ها، 16:00 تا 18:00",
+    "prerequisites": [
+      "A1"
+    ],
+    "capacity": 10,
+    "teacher": "T1"
+  },
+  "EA2": {
+    "title": "آزمون آمادگی گوته A2",
+    "start_date": "2025-08-05",
+    "duration_weeks": 2,
+    "schedule": "شنبه‌ها، 16:00 تا 18:00",
+    "prerequisites": [
+      "A2",
+      "EA1"
+    ],
+    "capacity": 10,
+    "teacher": "T1"
+  },
+  "EB1": {
+    "title": "آزمون آمادگی گوته B1",
+    "start_date": "2025-08-12",
+    "duration_weeks": 2,
+    "schedule": "سه‌شنبه‌ها، 16:00 تا 18:00",
+    "prerequisites": [
+      "B1",
+      "EA2"
+    ],
+    "capacity": 12,
+    "teacher": "T2"
+  },
+  "EB2": {
+    "title": "آزمون آمادگی گوته B2",
+    "start_date": "2025-08-12",
+    "duration_weeks": 2,
+    "schedule": "سه‌شنبه‌ها، 16:00 تا 18:00",
+    "prerequisites": [
+      "B2",
+      "EB1"
+    ],
+    "capacity": 12,
+    "teacher": "T2"
+  },
+  "EC1": {
+    "title": "آزمون آمادگی گوته C1",
+    "start_date": "2025-09-03",
+    "duration_weeks": 2,
+    "schedule": "چهارشنبه‌ها، 17:00 تا 19:00",
+    "prerequisites": [
+      "C1",
+      "EB2"
+    ],
+    "capacity": 10,
+    "teacher": "T3"
+  },
+  "EC2": {
+    "title": "آزمون آمادگی گوته C2",
+    "start_date": "2025-09-03",
+    "duration_weeks": 2,
+    "schedule": "چهارشنبه‌ها، 17:00 تا 19:00",
+    "prerequisites": [
+      "C2",
+      "EC1"
+    ],
+    "capacity": 10,
+    "teacher": "T3"
+  }
+}

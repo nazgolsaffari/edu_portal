@@ -1,0 +1,99 @@
+{
+  "maryam_admin": {
+    "password": "adminpass",
+    "role": "admin",
+    "full_name": "مریم ادمینی"
+  },
+  "T1": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "آرش استادی",
+    "courses": [
+      "A1",
+      "A2",
+      "EA1",
+      "EA2"
+    ]
+  },
+  "T2": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "حمید استادی",
+    "courses": [
+      "B1",
+      "B2",
+      "EB1",
+      "EB2"
+    ]
+  },
+  "T3": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "حسن استادی",
+    "courses": [
+      "C1",
+      "C2",
+      "EC1",
+      "EC2"
+    ]
+  },
+  "T4": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "امیر استادی",
+    "courses": [
+      "Sprechen"
+    ]
+  },
+  "ST1": {
+    "password": "1234",
+    "role": "student",
+    "learning": [],
+    "full_name": "تتیس صفاری",
+    "phone": "09362381021",
+    "email": "example@gmail.com"
+  },
+  "ST2": {
+    "password": "1234",
+    "role": "student",
+    "learning": [],
+    "full_name": "نازگل صفاری",
+    "phone": "09112223344",
+    "email": "example@gmail.com"
+  },
+  "T5": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "استاد استادی",
+    "courses": [
+      "EC2",
+      "Sprechen"
+    ]
+  },
+  "t7": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "سارا استادی",
+    "courses": [
+      "EB2",
+      "Sprechen"
+    ]
+  },
+  "t5": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "مریم استادی",
+    "courses": [
+      "Sprechen"
+    ]
+  },
+  "T8": {
+    "password": "1234",
+    "role": "teacher",
+    "full_name": "زهرا استادی",
+    "courses": [
+      "EC1",
+      "Sprechen"
+    ]
+  }
+}
